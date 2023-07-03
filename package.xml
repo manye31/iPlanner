@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>iplanner_node</name>
+  <name>iplanner</name>
   <version>1.0.0</version>
   <description>A ROS warper for Imperative Planner (iPlanner) package</description>
 

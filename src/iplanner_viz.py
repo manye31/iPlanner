@@ -19,10 +19,11 @@ from sensor_msgs.msg import Image, Joy
 from std_msgs.msg import Int16
 from nav_msgs.msg import Path
 from geometry_msgs.msg import PoseStamped, PointStamped
+np.float = np.float64  # temp fix for following import
 import ros_numpy
 
 rospack = rospkg.RosPack()
-pack_path = rospack.get_path('iplanner_node')
+pack_path = rospack.get_path('iplanner')
 planner_path = os.path.join(pack_path,'iplanner')
 sys.path.append(pack_path)
 sys.path.append(planner_path)

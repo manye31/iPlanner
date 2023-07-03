@@ -26,7 +26,7 @@ import os
 import rospkg
 
 rospack = rospkg.RosPack()
-pack_path = rospack.get_path('iplanner_node')
+pack_path = rospack.get_path('iplanner')
 planner_path = os.path.join(pack_path,'iplanner')
 sys.path.append(pack_path)
 sys.path.append(planner_path)
