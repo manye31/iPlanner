@@ -51,7 +51,7 @@ if __name__ == '__main__':
         total_data_n = len([name for name in os.listdir(image_path) if os.path.isfile(os.path.join(image_path, name))])
         print("================= Reconstruction of env: %s =================="%(env_name))
         out_path = os.path.join(output_folder, env_name)
-        
+
         depth_constructor = DepthReconstruction(root_path, out_path, 0, 100, voxel_size*0.9, max_depth_range, is_max_iter)
         depth_constructor.depth_map_reconstruction(is_flat_ground=is_flat_ground)
         depth_constructor.save_reconstructed_data(image_type=image_type)
@@ -59,6 +59,7 @@ if __name__ == '__main__':
         print("Average Height: ", avg_height)
         if is_visualize:
             depth_constructor.show_point_cloud()
+        # avg_height = .5
 
         # Construct the 2D cost map
         tsdf_creator = TSDF_Creator(out_path, voxel_size=voxel_size, robot_size=robot_size, robot_height=avg_height)

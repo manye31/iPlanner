@@ -4,21 +4,23 @@
 # ==============================================================================
 
 import os
-import rospy
+import rclpy
+# from rclpy.utilities import load_yaml
 import torch
 import numpy as np
 
 class ROSArgparse():
-    def __init__(self, relative=None):
-        self.relative = relative
+    def __init__(self, node : rclpy.node):
+        self.node = node
 
     def add_argument(self, name, default, type=None, help=None):
-        name = os.path.join(self.relative, name)
-        if rospy.has_param(name):
-            rospy.loginfo('Get param %s', name)
+        name = os.path.join(self.node.get_name(), name)
+        if self.node.has_parameter(name):
+            self.node.get_logger().info(f"Got param {name}")
         else:
-            rospy.logwarn('Couldn\'t find param: %s, Using default: %s', name, default)
-        value = rospy.get_param(name, default)
+            self.node.get_logger().warn(f"Couldn\'t find param: {name}, Using default: {default}")
+        self.node.declare_parameter(name, default)
+        value = self.node.get_parameter(name).value
         variable = name[name.rfind('/')+1:].replace('-','_')
         if isinstance(value, str):
             exec('self.%s=\'%s\''%(variable, value))
@@ -27,6 +29,14 @@ class ROSArgparse():
 
     def parse_args(self):
         return self
+    
+    # def load_params_from_yaml(self, file):
+    #     with open(file, "r") as f:
+    #         yaml_data = f.read()
+        
+    #     params = load_yaml(yaml_data)
+
+    #     self.set_parameters(params)
 
 
 def msg_to_torch(data, shape=np.array([-1])):

@@ -11,7 +11,6 @@ import PIL
 import math
 import torch
 import torchvision.transforms as transforms
-
 from iplanner import traj_opt
 
 class IPlannerAlgo:

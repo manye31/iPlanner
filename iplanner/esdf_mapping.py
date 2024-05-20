@@ -78,8 +78,11 @@ class DataUtils:
         with open(intrinsic_path) as f:
             lines = f.readlines()
             elems = np.fromstring(lines[0][1:-1], dtype=float, sep=', ')
-        P = np.array(elems).reshape(3, 4)
-        K = np.concatenate((P, np.array([0.0, 0.0, 0.0, 1.0]).reshape(1,-1)), axis=0)
+        if elems.shape[0] == 16:
+            K = np.array(elems).reshape(4, 4)
+        elif elems.shape[0] == 12:
+            P = np.array(elems).reshape(3, 4)
+            K = np.concatenate((P, np.array([0.0, 0.0, 0.0, 1.0]).reshape(1,-1)), axis=0)
         return K
 
     @staticmethod
